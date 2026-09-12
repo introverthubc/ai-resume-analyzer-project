@@ -1,0 +1,76 @@
+import { test, expect } from '@playwright/test';
+import { samplePdf, original, rewritten } from './fixture.js';
+import { PDFParse } from 'pdf-parse';
+import { readFile } from 'node:fs/promises';
+
+test('browser: upload, analyze every panel, selected/all rewrites, versions, diff, export, errors and deletion', async ({ page }, testInfo) => {
+  const errors = [];
+  page.on('pageerror', error => errors.push(error.message));
+  await page.goto('/login');
+  await page.locator('input[type=email]').fill('tester@example.com');
+  await page.locator('input[type=password]').fill('local-test-password');
+  await page.getByRole('button', { name: /^Sign in/ }).click();
+  await expect(page).toHaveURL(/dashboard/);
+  await page.goto('/resumes');
+  await page.locator('input[type=file]').setInputFiles({ name: 'Sample.pdf', mimeType: 'application/pdf', buffer: await samplePdf() });
+  await page.getByPlaceholder('Resume title (optional)').fill('Browser flow resume');
+  await page.getByRole('button', { name: 'Upload & parse' }).click();
+  await expect(page).toHaveURL(/resumes\/[^/]+$/);
+  const detailUrl = page.url();
+  await expect(page.getByText('Resume text (V1)')).toBeVisible();
+  await expect(page.getByText('No analysis yet for this version')).toBeVisible();
+  const target = page.getByPlaceholder(/Target role/);
+  await target.fill('Frontend Engineer');
+  await page.getByRole('button', { name: 'Analyze', exact: true }).click();
+  await expect(page.getByText('Score Breakdown', { exact: true })).toBeVisible();
+  await expect(page.getByText('Add evidence of impact', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Strengths', exact: true }).click();
+  await expect(page.getByText('Relevant development experience', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Keywords', exact: true }).click();
+  await expect(page.getByText('Testing', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Rewrites', exact: true }).click();
+  await expect(page.getByText(original, { exact: true })).toBeVisible();
+  const boxes = page.getByRole('checkbox');
+  await boxes.last().uncheck();
+  await page.getByRole('button', { name: /Apply selected/ }).click();
+  await expect(page.getByText('Resume text (V2)')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Analyze', exact: true })).toBeEnabled();
+  await page.reload();
+  await expect(page.getByText('Resume text (V2)')).toBeVisible();
+  await page.getByRole('button', { name: 'V1', exact: true }).click();
+  await expect(page.getByText('Resume text (V1)')).toBeVisible();
+  await page.getByRole('button', { name: 'V2', exact: true }).click();
+  await page.getByRole('button', { name: 'Diff', exact: true }).click();
+  await expect(page.getByText('Version Diff', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'lines', exact: true }).click();
+  await expect(page.getByText(rewritten, { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Rewrites', exact: true }).click();
+  await page.getByRole('button', { name: /Apply all/ }).click();
+  await expect(page.getByText('Resume text (V3)')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Analyze', exact: true })).toBeEnabled();
+  await page.screenshot({ path: testInfo.outputPath('resume-v3.png'), fullPage: true });
+  await page.getByRole('button', { name: 'Export PDF' }).click();
+  const downloadButton = page.getByRole('button', { name: 'Download PDF' });
+  await expect(downloadButton).toBeEnabled();
+  const downloaded = page.waitForEvent('download');
+  await downloadButton.click();
+  const download = await downloaded;
+  const parser = new PDFParse({ data: await readFile(await download.path()) });
+  try { const result = await parser.getText(); expect(result.text).toContain(rewritten); expect(result.text).not.toContain('Alex Carter'); }
+  finally { await parser.destroy(); }
+  for (const name of ['Dashboard', 'Versions', 'History', 'Insights']) {
+    await page.getByRole('link', { name, exact: true }).click();
+    await expect(page.getByText('Browser flow resume', { exact: false }).first()).toBeVisible();
+  }
+  await page.goto(detailUrl);
+  await page.getByPlaceholder(/Target role/).fill('Test quota failure');
+  await page.getByRole('button', { name: 'Analyze', exact: true }).click();
+  await expect(page.getByText(/Gemini quota or rate limit reached/).first()).toBeVisible();
+  await page.goto('/resumes');
+  page.once('dialog', dialog => dialog.accept());
+  await page.getByRole('button', { name: 'Delete', exact: true }).click();
+  await expect(page.getByText('Browser flow resume', { exact: true })).toHaveCount(0);
+  await page.goto(detailUrl);
+  await expect(page.getByText('Resume not found', { exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});

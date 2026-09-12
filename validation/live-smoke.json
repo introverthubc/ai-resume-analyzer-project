@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "resumeId": "ad4cefbf-b94f-45fc-bee8-36f9c8e5b2d1",
+  "model": "gemini-3.6-flash",
+  "originalScore": 37,
+  "rewrittenScore": 55,
+  "suggestions": 2,
+  "versions": 2,
+  "checkedAt": "2026-09-10T19:33:52.193Z"
+}
