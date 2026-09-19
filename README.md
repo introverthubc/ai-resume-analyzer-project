@@ -1,154 +1,393 @@
-AI Resume Analyzer
+<div align="center">
 
-A full-stack AI-powered resume analysis application built with React, Vite, Node.js, Express, and Google Gemini.
+🤖 AI Resume Analyzer
+Full-Stack AI-Powered Resume Analysis with ATS Scoring, Keyword Insights, Smart Rewrites, and Resume Versioning
 
-The application lets users upload PDF resumes, extract resume text on the backend, analyze ATS readiness, review strengths and issues, inspect keyword coverage, generate AI-assisted bullet rewrites, and create improved resume versions.
 
-Features
 
-Resume Upload and Parsing
 
-Upload PDF resumes from the frontend.
 
-PDF-only validation.
 
-Maximum upload size: 5 MB.
 
-Backend file handling with Multer.
+<br/>
 
-Resume text extraction with pdf-parse.
+Upload Resume → Extract Text → Analyze with AI → Improve ATS Score → Apply Rewrites → Create New Version
 
-Uploaded PDF binary files are not permanently stored.
+</div>
 
-Extracted text and resume metadata are persisted locally.
+📌 Table of Contents
+Overview
 
-Gemini-Powered Resume Analysis
+Problem Statement
 
-The backend sends extracted resume text to Google Gemini and produces structured analysis data including:
+Motivation
 
-ATS score from 0–100
+Key Features
 
-ATS score breakdown
+Application Workflow
 
-Strengths
-
-Issues
-
-Present keywords
-
-Missing keywords
-
-Overall summary / verdict
-
-Resume bullet rewrite suggestions
-
-Optional target-role-aware analysis
-
-If Gemini is unavailable, the recreated version can use fallback analysis so the application remains usable during development.
-
-Keyword Analysis
-
-The application identifies:
-
-Keywords already present in the resume
-
-Important keywords that may be missing
-
-This helps users understand basic ATS keyword coverage and how closely the resume aligns with a target role.
-
-AI Bullet Rewrites
-
-Gemini can suggest improved resume bullets.
-
-Each rewrite can contain:
-
-Original text
-
-Improved text
-
-Resume section
-
-Explanation / rationale
-
-Users can:
-
-Select individual rewrites
-
-Apply selected rewrites
-
-Apply all rewrites
-
-Resume Versioning
-
-Every newly uploaded resume starts as V1.
-
-Applying rewrites creates a new version such as V2, V3, and so on.
-
-Previous versions remain available.
-
-Each version can be analyzed separately.
-
-Resume Management
-
-View uploaded resumes
-
-Open a resume detail page
-
-View ATS score
-
-Delete resumes
-
-Resume metadata, extracted text, analyses, and versions survive backend restarts through local JSON persistence
+System Architecture
 
 Tech Stack
 
+Project Structure
+
 Frontend
-
-React 19
-
-React DOM
-
-React Router DOM
-
-Vite
-
-Lucide React
-
-CSS
 
 Backend
 
-Node.js
+Resume Upload and PDF Parsing
 
-Express
+Gemini AI Integration
 
-CORS
+ATS Analysis
 
-Multer
+Keyword Analysis
 
-dotenv
+AI Rewrites
 
-pdf-parse
+Resume Versioning
 
-AI
+Data Persistence
 
-Google Gemini API
+API Overview
 
-@google/genai
+Installation
 
-Development Tools
+Environment Setup
 
-ESLint
+Running the Project
 
-Vite React plugin
+Security
 
-Project Structure
+Troubleshooting
 
-AI_RESUME_ANALYZER_RECREATED/
+What I Learned
+
+Interview Explanation
+
+Project Status
+
+Conclusion
+
+🚀 Overview
+AI Resume Analyzer is a completed full-stack web application that helps users evaluate and improve resumes using artificial intelligence.
+
+Users can upload a PDF resume from a React frontend. The file is sent to an Express backend, where the PDF is processed and converted into plain text. The extracted content is then analyzed using Google Gemini.
+
+The application provides structured feedback such as:
+
+ATS score
+
+overall resume verdict
+
+strengths
+
+issues
+
+keyword coverage
+
+missing keywords
+
+AI-generated bullet rewrites
+
+version-specific analysis
+
+The application also supports resume versioning, so applying AI suggestions creates a new version instead of overwriting the original resume.
+
+Resume V1
+   ↓
+Analyze
+   ↓
+Apply AI Rewrites
+   ↓
+Resume V2
+   ↓
+Analyze Again
+   ↓
+Resume V3
+This project demonstrates a complete end-to-end integration between a modern frontend, backend APIs, document processing, AI services, persistence, and version management.
+
+❓ Problem Statement
+Many students and job seekers prepare resumes without knowing how effectively those resumes may be understood by automated screening systems.
+
+Users may not know:
+
+whether their resume is ATS-friendly
+
+whether important sections are missing
+
+which keywords are already present
+
+which important keywords are missing
+
+whether resume bullets are too weak or generic
+
+whether achievements clearly show impact
+
+whether the resume is aligned with a target job role
+
+Manually reviewing all of these areas can be difficult, inconsistent, and time-consuming.
+
+The application solves this problem by providing a single workflow where a user can upload a resume, receive structured AI analysis, review improvement suggestions, and create improved resume versions.
+
+[!NOTE]
+The ATS score generated by this project is an AI-assisted estimate intended for guidance. It is not an official score from a commercial ATS provider.
+
+🎯 Motivation
+The main motivation behind this project was to gain practical experience in full-stack development and AI integration.
+
+Instead of learning React, Node.js, Express, REST APIs, file handling, PDF parsing, environment variables, AI APIs, and persistence separately, the goal was to combine them into one complete real-world project.
+
+The project helped build practical understanding of:
+
+React component architecture
+
+frontend routing
+
+client-server communication
+
+REST APIs
+
+file uploads
+
+middleware
+
+PDF parsing
+
+asynchronous JavaScript
+
+external AI APIs
+
+structured JSON responses
+
+environment variables
+
+error handling
+
+application versioning
+
+persistent storage
+
+<details> <summary><b>Interview-friendly motivation</b></summary>
+
+<br/>
+
+My main motivation for building this application was to gain practical experience in full-stack development. Instead of learning technologies like React, Node.js, Express, PDF parsing, and AI APIs separately, I wanted to combine them in one realistic project. I also wanted to understand how file uploads, backend processing, AI analysis, persistence, and version management work together in a complete application.
+
+</details>
+
+✨ Key Features
+<details open> <summary><b>📄 PDF Resume Upload</b></summary>
+
+<br/>
+
+Users can upload PDF resumes directly from the frontend.
+
+The backend:
+
+receives the file using Multer
+
+validates the upload
+
+processes the PDF in memory
+
+extracts resume text
+
+stores resume metadata and content
+
+</details>
+
+<details> <summary><b>🧠 Gemini-Powered Resume Analysis</b></summary>
+
+<br/>
+
+Google Gemini analyzes the extracted resume text and returns structured feedback.
+
+Analysis can include:
+
+ATS Score
+Score Breakdown
+Strengths
+Issues
+Keywords Present
+Keywords Missing
+Summary / Verdict
+Bullet Rewrites
+</details>
+
+<details> <summary><b>📊 ATS Score</b></summary>
+
+<br/>
+
+The application provides an ATS-style score between:
+
+0 - 100
+The score gives the user a quick view of overall resume quality and ATS readiness.
+
+</details>
+
+<details> <summary><b>🔍 Keyword Analysis</b></summary>
+
+<br/>
+
+The application identifies:
+
+important keywords already present
+
+relevant keywords that may be missing
+
+This makes it easier to understand whether a resume contains enough role-relevant terminology.
+
+</details>
+
+<details> <summary><b>✍️ AI Rewrite Suggestions</b></summary>
+
+<br/>
+
+Gemini can generate stronger resume bullet points.
+
+Each suggestion can contain:
+
+original bullet
+
+improved bullet
+
+section
+
+rationale
+
+</details>
+
+<details> <summary><b>🗂 Resume Versioning</b></summary>
+
+<br/>
+
+The original uploaded resume begins as:
+
+V1
+Applying selected AI suggestions creates:
+
+V2
+More improvements can produce:
+
+V3
+V4
+V5
+...
+Previous versions remain available.
+
+</details>
+
+<details> <summary><b>💾 Persistent Resume Data</b></summary>
+
+<br/>
+
+Resume information is persisted locally so data is not lost whenever the backend restarts.
+
+Stored data can include:
+
+resume metadata
+
+extracted text
+
+versions
+
+analysis results
+
+rewrite history
+
+</details>
+
+🔄 Application Workflow
+flowchart TD
+    A[User Uploads PDF Resume] --> B[React Frontend]
+    B --> C[Express Backend]
+    C --> D[Multer Receives File]
+    D --> E[pdf-parse Extracts Text]
+    E --> F[Create Resume V1]
+    F --> G[User Opens Resume]
+    G --> H[Optional Target Role]
+    H --> I[Click Analyze]
+    I --> J[Send Resume Content to Gemini]
+    J --> K[Structured AI Analysis]
+    K --> L[ATS Score]
+    K --> M[Strengths and Issues]
+    K --> N[Keyword Insights]
+    K --> O[AI Rewrites]
+    O --> P[Apply Selected Rewrites]
+    P --> Q[Create Resume V2]
+    Q --> R[Analyze New Version]
+End-to-end flow
+PDF Upload
+   ↓
+Backend Validation
+   ↓
+Text Extraction
+   ↓
+Resume Record
+   ↓
+Gemini Analysis
+   ↓
+Structured Feedback
+   ↓
+Rewrite Selection
+   ↓
+New Resume Version
+🏗 System Architecture
+graph LR
+    A[React Frontend] -->|HTTP Requests| B[Express Backend]
+    B --> C[PDF Parser]
+    B --> D[Local Persistence]
+    B --> E[Gemini API]
+    E --> B
+    B -->|JSON Responses| A
+Frontend responsibilities
+User Interface
+Navigation
+File Selection
+Upload State
+Analysis Display
+Keyword Display
+Rewrite Selection
+Version Selection
+API Requests
+Backend responsibilities
+File Validation
+PDF Processing
+Text Extraction
+AI Integration
+Analysis Normalization
+Resume Storage
+Version Management
+Rewrite Application
+Error Handling
+The separation between frontend and backend also keeps the Gemini API key away from client-side code.
+
+🛠 Tech Stack
+Layer	Technology	Purpose
+Frontend	React	User interface
+Build Tool	Vite	Development and builds
+Routing	React Router	Page navigation
+UI Icons	Lucide React	Interface icons
+Backend	Node.js	JavaScript server runtime
+API Framework	Express.js	REST API
+File Upload	Multer	Multipart file handling
+PDF Parsing	pdf-parse	Resume text extraction
+AI	Google Gemini	Resume analysis
+AI SDK	@google/genai	Gemini integration
+Config	dotenv	Environment variables
+Persistence	Local JSON storage	Resume data
+Code Quality	ESLint	Linting
+📁 Project Structure
+AI_RESUME_ANALYZER/
+│
+├── public/
 │
 ├── server/
 │   ├── data/
 │   │   └── resumes.json
+│   │
 │   └── server.js
 │
 ├── src/
@@ -156,333 +395,321 @@ AI_RESUME_ANALYZER_RECREATED/
 │   │   └── resumes.js
 │   │
 │   ├── components/
-│   │   ├── AnalysisPanel.jsx
-│   │   ├── Layout.jsx
-│   │   ├── ScoreRing.jsx
-│   │   └── UploadDropzone.jsx
+│   │   ├── analysis/
+│   │   ├── layout/
+│   │   ├── resume/
+│   │   └── ui/
 │   │
 │   ├── pages/
-│   │   ├── Dashboard.jsx
-│   │   ├── Placeholder.jsx
-│   │   ├── ResumeDetail.jsx
-│   │   └── Resumes.jsx
-│   │
 │   ├── App.jsx
 │   ├── index.css
 │   └── main.jsx
 │
-├── .env.example
+├── tests/
+├── validation/
+│
+├── .env
 ├── .gitignore
 ├── eslint.config.js
 ├── index.html
 ├── jsconfig.json
 ├── package.json
+├── package-lock.json
 ├── vite.config.js
 └── README.md
+Important files
+File	Responsibility
+server/server.js	Backend routes and business logic
+src/api/resumes.js	Frontend API communication
+src/pages/	Page-level components
+src/components/	Reusable UI components
+.env	Private environment variables
+package.json	Dependencies and scripts
+server/data/resumes.json	Persisted resume data
+🎨 Frontend
+The React frontend handles all user-facing interaction.
 
-How the Application Works
+Main responsibilities include:
 
-User uploads a PDF resume
-        ↓
-React sends multipart/form-data to Express
-        ↓
-Multer receives the PDF in memory
-        ↓
-pdf-parse extracts resume text
-        ↓
-Backend creates Resume + V1
-        ↓
-Resume data is persisted in resumes.json
-        ↓
-User optionally enters a target role
-        ↓
-User clicks Analyze
-        ↓
-Backend sends resume text to Gemini
-        ↓
-Gemini returns structured analysis
-        ↓
-Backend validates / normalizes the response
-        ↓
-Frontend displays:
-  • ATS score
-  • Score breakdown
-  • Strengths
-  • Issues
-  • Keywords
-  • Verdict
-  • Rewrites
-        ↓
-User applies selected rewrite suggestions
-        ↓
-Backend creates V2 / V3 / ...
+resume upload UI
 
-Prerequisites
+resume listing
 
-Install:
+resume detail pages
 
-Node.js
+target-role input
 
-npm
+ATS score display
 
-A Google Gemini API key
+verdict display
 
-Check Node.js and npm:
+strengths and issues
 
-node -v
-npm -v
+keywords
 
-If Windows says:
+AI rewrite cards
 
-node is not recognized
+rewrite selection
 
-Node may not be installed or may not be available in the current PATH.
+version switching
 
-For a temporary PowerShell PATH fix:
+loading states
 
-$env:Path += ";C:\Program Files\nodejs"
+error states
 
-Then verify again:
+Example frontend request
+const response = await fetch(
+  "http://localhost:5000/api/resume/analyze",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      resumeId,
+      versionId,
+      targetRole,
+    }),
+  }
+);
+Keeping API logic inside a dedicated API layer makes the frontend easier to maintain.
 
-node -v
-npm -v
+⚙️ Backend
+The Express backend contains the main processing and business logic.
 
-If Node.js is not installed, install the current LTS release and reopen VS Code afterward.
+It is responsible for:
 
-Installation
+accepting uploaded files
 
-1. Open the Project
+validating resumes
 
-Open the project root in VS Code.
+extracting text
 
-The terminal should be inside the directory containing package.json.
+storing resume data
 
-Example:
+sending resume content to Gemini
 
-C:\...\AI_RESUME_ANALYZER_RECREATED>
+receiving structured AI output
 
-2. Install Dependencies
+returning JSON responses
 
-Run:
+creating new versions
 
-npm install
+applying rewrite suggestions
 
-This installs frontend and backend dependencies from package.json.
+Basic backend setup
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
 
-Gemini API Setup
+dotenv.config();
 
-1. Create a Gemini API Key
+const app = express();
 
-Create an API key in Google AI Studio.
+app.use(cors());
+app.use(express.json());
+📤 Resume Upload and PDF Parsing
+The upload flow is:
 
-2. Create .env
-
-The project includes:
-
-.env.example
-
-Copy it to:
-
-.env
-
-On Windows:
-
-copy .env.example .env
-
-On macOS/Linux:
-
-cp .env.example .env
-
-Then edit .env:
-
-GEMINI_API_KEY=your_real_gemini_api_key
-GEMINI_MODEL=gemini-3.6-flash
-PORT=5000
-
-The default model used by this recreated version is:
-
-gemini-3.6-flash
-
-Security
-
-Never expose your API key in:
-
-Screenshots
-
-GitHub commits
-
-Frontend React code
-
-Public repositories
-
-Chat messages
-
-The project keeps the API key on the backend only.
-
-.gitignore includes:
-
-.env
-node_modules
-dist
-
-If a key is accidentally exposed, revoke it and create a new one.
-
-Running the Project
-
-The backend and frontend run in separate terminals.
-
-Terminal 1 — Start Backend
-
-npm run server
-
-Backend URL:
-
-http://localhost:5000
-
-Gemini/backend test:
-
-http://localhost:5000/api/test
-
-A successful Gemini response looks similar to:
-
-{
-  "message": "Gemini connection working",
-  "aiConfigured": true,
-  "model": "gemini-3.6-flash"
-}
-
-Keep the backend terminal running.
-
-Terminal 2 — Start Frontend
-
-Open a second terminal:
-
-npm run dev
-
-Vite normally starts at:
-
-http://localhost:5173
-
-Open that URL in the browser.
-
-Main Application Flow
-
-Open Your Resumes.
-
-Select a PDF resume.
-
-Upload the resume.
-
-Open the generated resume detail page.
-
-Optionally enter a target job role.
-
-Click Analyze.
-
-Review the ATS score and score breakdown.
-
-Review the verdict.
-
-Open the Issues tab.
-
-Open the Strengths tab.
-
-Open the Keywords tab.
-
-Open the Rewrites tab.
-
-Select the rewrites you want.
-
-Click Apply selected or Apply all.
-
-A new resume version is created.
-
-Analyze the new version again if required.
-
-API Endpoints
-
-The recreated backend exposes the following routes.
-
-Method
-
-Endpoint
-
-Purpose
-
-GET
-
-/api/test
-
-Test backend and Gemini connectivity
-
-GET
-
-/api/resumes
-
-Fetch all resumes
-
-POST
-
-/api/resume/upload
-
-Upload and parse a PDF resume
-
-GET
-
-/api/resume/:id
-
-Fetch one resume and its versions
-
-POST
-
-/api/resume/analyze
-
-Analyze a resume version
-
-GET
-
-/api/resume/:id/analysis/:versionId
-
-Fetch analysis for a specific version
-
-POST
-
-/api/resume/:id/rewrite
-
-Apply selected AI rewrites and create a new version
-
-DELETE
-
-/api/resume/:id
-
-Delete a resume
-
-Example Upload Request
-
-The frontend sends the PDF using FormData.
-
-Conceptually:
-
+React
+ ↓
+FormData
+ ↓
+Express
+ ↓
+Multer
+ ↓
+PDF Buffer
+ ↓
+pdf-parse
+ ↓
+Plain Resume Text
+Frontend upload example
 const formData = new FormData();
+
 formData.append("resume", file);
-formData.append("title", title);
 
 await fetch("http://localhost:5000/api/resume/upload", {
   method: "POST",
   body: formData,
 });
+[!TIP]
+When sending browser FormData, do not manually set Content-Type. The browser adds the correct multipart boundary.
 
-Do not manually set Content-Type when sending FormData; the browser supplies the multipart boundary.
+The extracted text is then used by the analysis system rather than trying to analyze the raw PDF binary.
 
-Example Analysis Request
+🤖 Gemini AI Integration
+Gemini is used only from the backend.
+
+React
+   ↓
+Express
+   ↓
+Gemini
+   ↓
+Express
+   ↓
+React
+Environment configuration
+GEMINI_API_KEY=your_real_gemini_api_key
+GEMINI_MODEL=gemini-3.6-flash
+PORT=5000
+Gemini SDK setup
+import { GoogleGenAI } from "@google/genai";
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
+Model call
+const response = await ai.models.generateContent({
+  model: process.env.GEMINI_MODEL || "gemini-3.6-flash",
+  contents: prompt,
+});
+The backend then parses and normalizes the AI output before returning it to React.
+
+📊 ATS Analysis
+A resume analysis can contain data similar to:
+
+{
+  atsScore: 78,
+
+  scoreBreakdown: {
+    structure: 82,
+    impact: 70,
+    keywords: 74,
+    readability: 88
+  },
+
+  strengths: [],
+  issues: [],
+  keywordsPresent: [],
+  keywordsMissing: [],
+  bulletRewrites: [],
+  summary: ""
+}
+Analysis areas
+Structure — organization and important resume sections
+
+Impact — clarity of achievements and contributions
+
+Keywords — relevant technical and role terminology
+
+Readability — clarity and ease of understanding
+
+🔍 Keyword Analysis
+The application separates keyword feedback into two groups.
+
+Keywords Present
+These are relevant skills or terms already found in the resume.
+
+Example:
+
+React
+JavaScript
+HTML
+CSS
+Git
+SQL
+Keywords Missing
+These are useful terms that may improve alignment with the selected role.
+
+Example:
+
+Node.js
+Express
+MongoDB
+REST API
+Testing
+Keyword analysis helps users understand how well the resume communicates relevant technical experience.
+
+✍️ AI Rewrites
+Gemini can generate improved resume bullets.
+
+Example object:
+
+{
+  _id: "rewrite_123",
+  section: "experience",
+  original: "Worked on web applications.",
+  rewritten: "Developed responsive web applications using React and reusable component architecture.",
+  rationale: "Uses a stronger action verb and communicates the technical contribution more clearly."
+}
+The user can review suggestions before applying them.
+
+This keeps the user in control of resume changes rather than automatically replacing content.
+
+🔁 Resume Versioning
+Resume versioning is one of the main application features.
+
+The original resume starts as:
+
+V1
+Applying selected rewrite suggestions creates:
+
+V2
+Additional improvements can create:
+
+V3
+V4
+...
+Why versioning?
+Versioning prevents destructive changes.
+
+Instead of:
+
+Original Resume → Overwritten
+the application uses:
+
+V1 → V2 → V3
+This allows the user to preserve older versions and compare improvements.
+
+💾 Data Persistence
+The completed project persists resume data locally.
+
+Typical persistence file:
+
+server/data/resumes.json
+Stored information can include:
+
+resume ID
+
+filename
+
+title
+
+extracted text
+
+upload date
+
+versions
+
+analyses
+
+rewrite results
+
+This means resume information can remain available even after restarting the backend.
+
+🌐 API Overview
+The application uses REST-style backend routes.
+
+Method	Endpoint	Purpose
+GET	/api/resumes	Get saved resumes
+POST	/api/resume/upload	Upload a resume
+GET	/api/resume/:id	Get resume details
+POST	/api/resume/analyze	Analyze a resume
+GET	/api/resume/:id/analysis/:versionId	Get version analysis
+POST	/api/resume/:id/rewrite	Apply rewrites
+DELETE	/api/resume/:id	Delete a resume
+<details> <summary><b>Example analysis request</b></summary>
 
 {
   "resumeId": "resume_123",
   "versionId": "v1",
   "targetRole": "Frontend Developer"
 }
+</details>
 
-The backend returns structured analysis data such as:
+<details> <summary><b>Example analysis response</b></summary>
 
 {
   "message": "Resume analyzed successfully",
@@ -496,440 +723,245 @@ The backend returns structured analysis data such as:
     "bulletRewrites": []
   }
 }
+</details>
 
-The actual values are generated from the uploaded resume.
+⚙️ Installation
+1. Open the project folder
+Open the project in VS Code.
 
-Analysis Data
+The terminal should be inside the folder containing:
 
-A resume analysis may contain fields similar to:
+package.json
+2. Install dependencies
+npm install
+3. Verify Node.js
+node -v
+npm -v
+Node.js 20 or newer is recommended.
 
-{
-  _id,
-  resumeId,
-  versionId,
-  targetRole,
-  atsScore,
-  scoreBreakdown,
-  strengths,
-  issues,
-  keywordsPresent,
-  keywordsMissing,
-  bulletRewrites,
-  summary
-}
+🔐 Environment Setup
+Create:
 
-ATS Score
+.env
+in the project root.
 
-A number from:
+Add:
 
-0 – 100
+GEMINI_API_KEY=your_gemini_api_key
+GEMINI_MODEL=gemini-3.6-flash
+PORT=5000
+[!WARNING]
+Never upload .env to GitHub.
 
-Higher scores indicate stronger ATS readiness according to the application's analysis criteria.
+Your .gitignore should include:
 
-The score is intended as guidance, not as a guarantee that a particular employer or ATS platform will score the resume identically.
+.env
+node_modules
+dist
+*.log
+▶️ Running the Project
+The frontend and backend run separately.
 
-Persistent Storage
-
-Resume information is stored in:
-
-server/data/resumes.json
-
-The recreated version stores:
-
-Resume metadata
-
-Extracted resume text
-
-Resume versions
-
-Analyses
-
-Rewrite results
-
-This makes the project easy to demonstrate without requiring a database server.
-
-For a production implementation, the storage layer can be replaced with:
-
-MongoDB
-
-PostgreSQL
-
-MySQL
-
-Firebase
-
-Supabase
-
-Why JSON Storage Was Used
-
-For this student project, local JSON persistence keeps the architecture easy to understand:
-
-Frontend
-   ↓
-REST API
-   ↓
-Express business logic
-   ↓
-JSON persistence
-   ↓
-Gemini API
-
-It demonstrates backend persistence without requiring database configuration during a local demo.
-
-Resume Versioning
-
-A new upload begins with:
-
-V1
-
-When a user applies rewrite suggestions, the backend creates another version:
-
-V1 → V2 → V3 → ...
-
-This prevents the original resume content from being overwritten and lets users compare improvements.
-
-Gemini Integration
-
-Gemini is initialized only on the backend.
-
-Environment variable:
-
-GEMINI_API_KEY=...
-
-The backend uses the Gemini SDK to generate structured resume analysis.
-
-A simplified flow is:
-
-const response = await ai.models.generateContent({
-  model: GEMINI_MODEL,
-  contents: prompt,
-});
-
-The application then parses, validates, and normalizes the generated result before sending it to React.
-
-Why the API Key Is Not in React
-
-Anything included directly in frontend JavaScript can be inspected by a browser user.
-
-Therefore this would be unsafe:
-
-// Do not do this
-const key = "my-secret-key";
-
-Instead:
-
-React
-  ↓
-Express backend
-  ↓
-Gemini API
-
-The backend reads the secret from .env.
-
-PDF Processing
-
-Multer receives the uploaded PDF in memory.
-
-The backend then uses pdf-parse to extract its text.
-
-Conceptually:
-
-PDF
- ↓
-Multer
- ↓
-Buffer
- ↓
-pdf-parse
- ↓
-Plain text
- ↓
-Gemini analysis
-
-This allows the AI model to analyze the resume content without requiring the frontend to understand PDF internals.
-
-Scripts
-
-Available npm scripts:
-
-npm run dev
-
-Starts the Vite development server.
-
+Terminal 1 — Backend
 npm run server
+Typical backend URL:
 
-Starts the Express backend.
+http://localhost:5000
+Keep this terminal running.
 
-npm run build
+Terminal 2 — Frontend
+npm run dev
+Typical Vite URL:
 
-Builds the frontend for production.
+http://localhost:5173
+Development setup
+Terminal 1 → npm run server
+Terminal 2 → npm run dev
+🔒 Security
+The Gemini API key is stored only in the backend environment.
 
-npm run preview
+Never commit or share:
 
-Previews the production frontend build locally.
+.env
+API keys
+Passwords
+Tokens
+Secrets
+Before pushing to GitHub:
 
-npm run lint
+git status
+Make sure .env is not listed as a tracked file.
 
-Runs ESLint.
+If an API key is ever exposed publicly, revoke it and generate a new one immediately.
 
-Common Errors and Fixes
+🛑 Troubleshooting
+<details> <summary><b>Node is not recognized</b></summary>
 
-npm or node is not recognized
+<br/>
 
-Example:
+If Windows shows:
 
 node : The term 'node' is not recognized
-
-Confirm Node is installed:
+Check Node directly:
 
 & "C:\Program Files\nodejs\node.exe" -v
-
-If that works but node -v does not, the Node installation directory is missing from the terminal PATH.
-
-Temporary fix:
+Temporary PATH fix:
 
 $env:Path += ";C:\Program Files\nodejs"
-
 Then:
 
 node -v
 npm -v
+</details>
 
-ERR_MODULE_NOT_FOUND
+<details> <summary><b>Cannot find package</b></summary>
 
-Example:
+<br/>
 
-Cannot find package 'dotenv'
-
-Install project dependencies:
+Run:
 
 npm install
+Make sure the terminal is inside the folder containing package.json.
 
-Make sure you run this from the folder containing the project's package.json.
+</details>
 
-Cannot GET /
+<details> <summary><b>Cannot GET /</b></summary>
 
-Opening:
+<br/>
 
-http://localhost:5000/
+The backend is an API server, so a root browser page may not exist.
 
-may show:
+Use the frontend URL or a defined API route.
 
-Cannot GET /
+</details>
 
-That does not necessarily mean the backend is broken. The Express server may simply not define a / page.
+<details> <summary><b>Gemini authentication error</b></summary>
 
-Use:
+<br/>
 
-http://localhost:5000/api/test
+Check the Gemini key in .env.
 
-for the recreated project's backend test.
+After changing .env, restart the backend:
 
-Gemini says it is not configured
-
-Example:
-
-{
-  "aiConfigured": false
-}
-
-Check .env:
-
-GEMINI_API_KEY=your_key
-
-Save the file and restart the backend:
-
-Ctrl + C
 npm run server
+</details>
 
-Environment variables are loaded when the backend starts.
+🧠 What I Learned
+This project provided practical experience with:
 
-Gemini returns 401 UNAUTHENTICATED
+React
+React Router
+Component Architecture
+State Management
+REST APIs
+Express.js
+Middleware
+Multer
+FormData
+PDF Parsing
+Async/Await
+Gemini API
+Prompt Engineering
+JSON Responses
+Environment Variables
+Error Handling
+Resume Versioning
+Persistent Storage
+Git and GitHub
+The main learning outcome was understanding how multiple technologies work together in a complete full-stack application.
 
-Possible causes:
+🎤 Interview Explanation
+<details open> <summary><b>60-second project explanation</b></summary>
 
-Invalid API key
+<br/>
 
-Revoked key
+I built a full-stack AI-powered resume analyzer where users upload a PDF resume through a React frontend. The frontend sends the file to an Express backend using multipart form data, and Multer handles the file upload. The backend uses pdf-parse to extract the resume text.
 
-Incomplete/copied key
+After extracting the text, the backend sends the content to Google Gemini and receives structured analysis such as an ATS score, strengths, issues, keyword coverage, an overall verdict, and resume bullet rewrite suggestions.
 
-Incorrect credential type
+I also implemented resume versioning, so when a user applies AI suggestions, the application creates a new version like V2 instead of overwriting the original V1. Resume data and analysis results are persisted locally, and the Gemini API key is stored only in the backend environment.
 
-Create a fresh Gemini API key in Google AI Studio, replace the .env value, save it, and restart the backend.
+</details>
 
-Resume disappears after server restart
+Topics to prepare for cross-questioning
+React components
 
-In older development versions, resumes were stored in a JavaScript Map(), so restarting Node cleared them.
+state and props
 
-The recreated project fixes this by using:
+routing
 
-server/data/resumes.json
+REST APIs
 
-Development Notes
+Express routes
 
-The project intentionally separates:
+middleware
 
-Frontend responsibilities
+Multer
 
-UI
-
-File selection
-
-User interaction
-
-Routing
-
-Rendering analysis results
-
-Calling backend APIs
-
-Backend responsibilities
-
-File validation
-
-PDF extraction
-
-Gemini API calls
-
-Analysis normalization
-
-Resume persistence
-
-Version management
-
-Rewrite application
-
-This separation keeps the API key secure and makes the project easier to maintain.
-
-Interview Explanation
-
-A concise way to explain the project in an interview:
-
-I built a full-stack resume analysis application where users upload a PDF resume and the backend extracts its text using pdf-parse. The React frontend communicates with an Express REST API, while the backend integrates with Google Gemini to generate ATS-focused analysis such as scores, strengths, issues, keyword coverage, and bullet-point rewrites. I also implemented resume versioning so applying AI suggestions creates a new version instead of overwriting the original. For local persistence I used JSON-based storage, while the architecture allows it to be replaced with a database later.
-
-Motivation
-
-The main motivation was to gain practical experience in full-stack development by combining frontend development, backend APIs, file handling, AI integration, data persistence, and version management in one application.
-
-Instead of learning React, Node.js, Express, REST APIs, PDF parsing, and generative AI separately, the project brings them together in one realistic workflow.
-
-Problem Statement
-
-Resume improvement is often difficult because applicants may not know:
-
-Whether their resume is easy for ATS systems to parse
-
-Which sections are weak
-
-Which important keywords are missing
-
-Whether bullet points clearly communicate impact
-
-How to adapt the resume toward a target role
-
-The project focuses on analyzing these aspects and presenting structured feedback through one interface.
-
-Current Limitations
-
-This is primarily a local/student project.
-
-Current limitations include:
-
-Local JSON persistence instead of a production database
-
-No complete production authentication system
-
-AI-generated analysis can vary between requests
-
-ATS scores are application-generated estimates and not official scores from third-party ATS vendors
-
-Rewrite quality depends on extracted PDF text and AI output
-
-Deployment configuration may require additional environment setup
-
-Future Improvements
-
-Possible extensions:
-
-MongoDB or PostgreSQL
-
-User authentication
-
-Cloud deployment
-
-Resume/job-description similarity scoring
-
-Multiple resume formats
-
-DOCX upload
-
-Download/export improved resume
-
-User accounts
-
-Analysis history
-
-Resume comparison
-
-Better structured resume section extraction
-
-Rate limiting
-
-API request logging
-
-Automated tests
-
-Docker support
-
-Production validation and monitoring
-
-Important Security Reminder
-
-Before uploading this project to GitHub, confirm that .env is ignored:
-
-git status
-
-Your Gemini key should never appear as a tracked file.
-
-If it was ever committed, removing the file from the latest commit is not enough—the key should also be revoked because it may still exist in Git history.
-
-License
-
-This project is intended for educational and portfolio use.
-
-Summary
-
-This project demonstrates:
-
-React frontend development
-
-REST API integration
-
-Express backend development
-
-File uploads
+FormData
 
 PDF parsing
 
-Environment variables
+async/await
 
-Gemini API integration
+Gemini API
 
-Structured AI responses
+environment variables
 
-ATS-style resume analysis
+JSON parsing
 
-Keyword analysis
+error handling
 
-AI rewrites
+versioning
 
-Version control inside the application
+persistence
 
-Local data persistence
+✅ Project Status
+<div align="center">
 
-Error handling
+Module	Status
+Frontend	✅ Completed
+Backend	✅ Completed
+PDF Upload	✅ Completed
+PDF Parsing	✅ Completed
+Gemini Integration	✅ Completed
+ATS Analysis	✅ Completed
+Strengths & Issues	✅ Completed
+Keyword Analysis	✅ Completed
+AI Rewrites	✅ Completed
+Resume Versioning	✅ Completed
+Persistence	✅ Completed
+Error Handling	✅ Completed
+</div>
 
-Frontend/backend separation
+Final workflow
+Upload Resume
+      ↓
+Extract PDF Text
+      ↓
+Create Resume Version
+      ↓
+Analyze with Gemini
+      ↓
+Display ATS Results
+      ↓
+Review Strengths / Issues / Keywords
+      ↓
+Review AI Rewrites
+      ↓
+Apply Selected Rewrites
+      ↓
+Create New Resume Version
+🏁 Conclusion
+The AI Resume Analyzer is a completed full-stack project that demonstrates how frontend development, backend APIs, file processing, artificial intelligence, and persistence can be combined into one practical application.
 
-It is designed as a practical full-stack engineering project that can be demonstrated locally and extended into a production application.
+The project goes beyond a basic AI demo by implementing a complete workflow from resume upload to structured analysis and version-controlled improvement.
+
+<div align="center">
+
+🤖 AI Resume Analyzer
+Built with React, Node.js, Express, Google Gemini, Multer, and pdf-parse
+
+Project Status: ✅ Completed
+</div>
+
